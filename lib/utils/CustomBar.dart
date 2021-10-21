@@ -6,7 +6,7 @@ Widget customBar(final String titleCustomBar) {
     padding: EdgeInsets.all(16),
     child: Container(
       margin: EdgeInsets.only(left: 30.0),
-      child: Text(titleCustomBar,
+      child: Text('$titleCustomBar',
         style: GoogleFonts.poppins(
             fontWeight: FontWeight.w500,
             fontSize: 22,

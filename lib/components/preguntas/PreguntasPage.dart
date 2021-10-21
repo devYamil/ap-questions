@@ -48,7 +48,7 @@ class _PreguntasPageState extends State<PreguntasPage> {
                   if (snapshot.data == null) {
                     return Container(
                       child: Center(
-                        child: Text('Loading'),
+                        child: Text('Cargando...!!'),
                       ),
                     );
                   } else {
@@ -63,8 +63,10 @@ class _PreguntasPageState extends State<PreguntasPage> {
       floatingActionButton: new FloatingActionButton(
           elevation: 0.0,
           child: new Icon(Icons.check),
-          backgroundColor: new Color(0xFFE57373),
-          onPressed: (){}
+          backgroundColor: Colors.lightGreen,
+          onPressed: (){
+
+          }
       )
     );
   }

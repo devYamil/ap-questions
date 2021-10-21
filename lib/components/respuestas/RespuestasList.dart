@@ -21,7 +21,7 @@ class RespuestasList extends StatefulWidget {
   _RespuestasListState createState() => _RespuestasListState();
 }
 
-class _RespuestasListState extends State<RespuestasList> {
+class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollControllerMaterias = new ScrollController();
   List<Respuestas> respuestas;
   String token;
@@ -29,10 +29,12 @@ class _RespuestasListState extends State<RespuestasList> {
   Respondidos respondidos;
 
   bool selectedRespuesta;
-  int selectRadio;
+
   Color colorRadio;
+  int selectRadio = 0;
 
-
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -43,7 +45,7 @@ class _RespuestasListState extends State<RespuestasList> {
     super.initState();
 
     selectedRespuesta = false;
-    selectRadio = 0;
+
     colorRadio = Colors.grey;
 
     /*if(respondidos.respuesta == respuestaCorrecta){
@@ -70,17 +72,17 @@ class _RespuestasListState extends State<RespuestasList> {
               colorRadio = Colors.green;
               selectRadio = valueSelected;
             });
-            //Toast.show('Correcto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.green);
+            Toast.show('Correcto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.green);
           }else{
             setState(() {
               colorRadio = Colors.redAccent;
               selectRadio = valueSelected;
             });
-            //Toast.show('Incorrecto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.redAccent);
+            Toast.show('Incorrecto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.redAccent);
           }
 
         }else{
-          //Toast.show('Esta pregunta ya fue respondida', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.redAccent);
+          Toast.show('Esta pregunta ya fue respondida', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.redAccent);
         }
         /*if(valueSelected == respuestaCorrecta){
           colorRadio = Colors.green;

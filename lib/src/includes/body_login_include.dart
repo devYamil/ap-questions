@@ -72,7 +72,7 @@ class BodyLoginInclude extends StatelessWidget {
                     'Ingresar',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: 18,
                     ),
                   ),
                 ),

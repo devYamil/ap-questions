@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:AP/bloc/navigation_bloc/navigation_bloc.dart';
-import 'package:AP/src/models/Users.dart';
 import 'package:AP/src/pages/MenuPage.dart';
 import 'package:AP/src/providers/getDataUser.dart';
 import 'package:flutter/material.dart';

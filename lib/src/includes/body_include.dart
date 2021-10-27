@@ -47,7 +47,7 @@ class BodyInclude extends StatelessWidget {
                   'Iniciar Sesion',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 18,
                   ),
                 ),
               ),

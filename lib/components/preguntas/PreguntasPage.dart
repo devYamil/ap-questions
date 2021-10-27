@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:AP/src/providers/servicesPreguntas.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:AP/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:AP/utils/env.dart';
 import '../../utils/CustomBar.dart';
 import './PreguntasList.dart';
+
 
 class PreguntasPage extends StatefulWidget with NavigationStates {
   int idMateria;
@@ -65,7 +64,8 @@ class _PreguntasPageState extends State<PreguntasPage> {
           child: new Icon(Icons.check),
           backgroundColor: Colors.lightGreen,
           onPressed: (){
-
+            BlocProvider.of<NavigationBloc>(context)
+                .add(NavigationEvents.ResultadoPageClickEvent);
           }
       )
     );

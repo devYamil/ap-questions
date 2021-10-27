@@ -5,6 +5,7 @@ import 'package:AP/src/pages/MateriasPage.dart';
 import 'package:AP/src/pages/MyAccountPage.dart';
 import 'package:AP/src/pages/MyOrder.dart';
 import 'package:AP/components/preguntas/PreguntasPage.dart';
+import 'package:AP/components/resultado/ResultadoPage.dart';
 
 enum NavigationEvents {
   HomePageClickEvent,
@@ -13,6 +14,8 @@ enum NavigationEvents {
   DetailProductPageClickEvent,
   MyAccountClickedEvent,
   MyOrdersClickedEvent,
+  ResultadoPageClickEvent
+
 }
 int idProducto;
 void cargarProducto(idProductoLoad) {
@@ -58,6 +61,9 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.MyOrdersClickedEvent:
         yield MyOrder();
+        break;
+      case NavigationEvents.ResultadoPageClickEvent:
+        yield ResultadoPage();
         break;
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:AP/src/models/Respuestas.dart';
 import 'package:AP/src/models/Respondidos.dart';
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RespuestasList extends StatefulWidget {
   final List<Respuestas> respuestas;
@@ -33,6 +34,11 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
   Color colorRadio;
   int selectRadio = 0;
 
+  SharedPreferences sharedPreferences;
+
+  int correctos = 0;
+  int incorrectos = 0;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -45,6 +51,9 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
     super.initState();
 
     selectedRespuesta = false;
+
+    correctos = 0;
+    incorrectos = 0;
 
     colorRadio = Colors.grey;
 
@@ -67,13 +76,16 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
         if(selectedRespuesta == false){
           selectedRespuesta = true;
           if(valueSelected == respuestaCorrecta){
-
+            correctos = correctos + 1;
+            sharedPreferences.setString('correcto', '${correctos}');
             setState(() {
               colorRadio = Colors.green;
               selectRadio = valueSelected;
             });
             Toast.show('Correcto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.green);
           }else{
+            incorrectos = incorrectos + 1;
+            sharedPreferences.setString('incorrecto', '${incorrectos}');
             setState(() {
               colorRadio = Colors.redAccent;
               selectRadio = valueSelected;

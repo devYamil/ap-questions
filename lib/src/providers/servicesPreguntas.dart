@@ -36,6 +36,7 @@ class PreguntasServices {
           preguntas.add(pregunta);
         }
         sharedPreferences.setString('next_page_url', jsonData['next_page_url']);
+        sharedPreferences.setString('total_preguntas', '${jsonData['total']}');
       } else {
         throw Exception('Failed to load get preguntas');
       }

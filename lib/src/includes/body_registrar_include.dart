@@ -4,13 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:AP/src/includes/background_login_includes.dart';
-import 'package:AP/src/pages/RegistrarPage.dart';
 import 'package:AP/utils/constants_util.dart';
 
 import 'package:AP/src/providers/login_provider.dart';
 
-class BodyLoginInclude extends StatelessWidget {
-  const BodyLoginInclude({
+class BodyRegistrarInclude extends StatelessWidget {
+  const BodyRegistrarInclude({
     Key key,
   }) : super(key: key);
 
@@ -29,7 +28,7 @@ class BodyLoginInclude extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Iniciar Sesion',
+              'Registrate...!',
               style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w300, fontSize: 30.0),
             ),
@@ -64,8 +63,8 @@ class BodyLoginInclude extends StatelessWidget {
                       if (value == true) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return SideBarLayout();
-                        }));
+                              return SideBarLayout();
+                            }));
                       }
                     });
                   },
@@ -79,23 +78,6 @@ class BodyLoginInclude extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 40),
-                GestureDetector(
-                  child: Text(
-                      'Registrate..!',
-                      style: GoogleFonts.poppins(
-                        color: kPrimaryColor,
-                        fontSize: 14,
-                      )),
-                  onTap: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext ctx) => RegistrarPage()));
-                  },
-                )
-              ],
-            )
           ],
         ),
       ),
@@ -143,10 +125,10 @@ class RoundedInputField extends StatelessWidget {
   final TextEditingController controladorEmail;
   const RoundedInputField(
       {Key key,
-      this.hintText,
-      this.icon = Icons.email,
-      this.onChanged,
-      this.controladorEmail})
+        this.hintText,
+        this.icon = Icons.email,
+        this.onChanged,
+        this.controladorEmail})
       : super(key: key);
 
   @override

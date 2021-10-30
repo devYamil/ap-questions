@@ -72,11 +72,16 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
 
   selectValueRadioButton(valueSelected, respuestaCorrecta){
 
+        print('VALOR SELECCIONADO : ${valueSelected}');
+        print('RESPUESTA CORRECTA : ${respuestaCorrecta}');
+
+
 
         if(selectedRespuesta == false){
           selectedRespuesta = true;
           if(valueSelected == respuestaCorrecta){
             correctos = correctos + 1;
+            print('CORRECTOS : ${correctos}');
             sharedPreferences.setString('correcto', '${correctos}');
             setState(() {
               colorRadio = Colors.green;
@@ -85,6 +90,7 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
             Toast.show('Correcto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.green);
           }else{
             incorrectos = incorrectos + 1;
+            print('INCORRECTOS : ${incorrectos}');
             sharedPreferences.setString('incorrecto', '${incorrectos}');
             setState(() {
               colorRadio = Colors.redAccent;

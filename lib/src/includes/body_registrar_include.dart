@@ -1,4 +1,6 @@
-import 'package:AP/src/pages/sidebar_layout.dart';
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,16 +9,49 @@ import 'package:AP/src/includes/background_login_includes.dart';
 import 'package:AP/utils/constants_util.dart';
 
 import 'package:AP/src/providers/login_provider.dart';
+import 'package:AP/src/pages/LoginPage.dart';
 
-class BodyRegistrarInclude extends StatelessWidget {
+import 'package:device_info/device_info.dart';
+
+class BodyRegistrarInclude extends StatefulWidget {
   const BodyRegistrarInclude({
     Key key,
   }) : super(key: key);
 
   @override
+  _BodyRegistrarIncludeState createState() => _BodyRegistrarIncludeState();
+}
+
+class _BodyRegistrarIncludeState extends State<BodyRegistrarInclude> {
+
+  String identifier;
+
+  @override
+  void initState() {
+    super.initState();
+    identifier = '0-identifier-1';
+    getDeviceDetails();
+  }
+
+  Future<String> getDeviceDetails() async {
+    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        identifier = build.androidId; //UUID for Android
+      }else{
+        identifier = '0-identifier-2';
+      }
+    } catch(E) {
+      identifier = '0-identifier-3';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    TextEditingController controladorName = new TextEditingController();
     TextEditingController controladorEmail = new TextEditingController();
     TextEditingController controladorPassword = new TextEditingController();
 
@@ -33,8 +68,14 @@ class BodyRegistrarInclude extends StatelessWidget {
                   fontWeight: FontWeight.w300, fontSize: 30.0),
             ),
             SvgPicture.asset(
-              'assets/icons/undraw_mobile_login_ikmv.svg',
+              'assets/icons/undraw_social_girl_-562-b.svg',
               height: size.height * 0.3,
+            ),
+            RoundedInputField(
+              hintText: 'Nombre Completo',
+              icon: Icons.email,
+              onChanged: (value) {},
+              controladorEmail: controladorName,
             ),
             RoundedInputField(
               hintText: 'Correo Electronico',
@@ -51,25 +92,42 @@ class BodyRegistrarInclude extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(29),
                 child: FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                   color: kPrimaryColor,
                   onPressed: () {
-                    final responseLogin = _loginProvider.loginPost(
+                    final responseRegistrar = _loginProvider.registrarPost(
+                        name: controladorName.text,
                         email: controladorEmail.text,
                         password: controladorPassword.text,
+                        id_dispositivo : identifier,
                         context: context);
-
-                    responseLogin.then((value) {
-                      if (value == true) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return SideBarLayout();
-                            }));
-                      }
-                    });
                   },
                   child: Text(
-                    'Ingresar',
+                    'Guardar',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              width: size.width * 0.8,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(29),
+                child: FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                  color: kPrimaryColor,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return LoginPage();
+                        }));
+                  },
+                  child: Text(
+                    'Iniciar Sesion',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 18,

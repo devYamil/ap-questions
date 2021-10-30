@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:AP/src/pages/sidebar_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,10 +12,40 @@ import 'package:AP/utils/constants_util.dart';
 
 import 'package:AP/src/providers/login_provider.dart';
 
-class BodyLoginInclude extends StatelessWidget {
+import 'package:device_info/device_info.dart';
+
+class BodyLoginInclude extends StatefulWidget {
   const BodyLoginInclude({
     Key key,
   }) : super(key: key);
+
+  @override
+  _BodyLoginIncludeState createState() => _BodyLoginIncludeState();
+}
+
+class _BodyLoginIncludeState extends State<BodyLoginInclude> {
+  String identifier;
+
+  @override
+  void initState() {
+    super.initState();
+    identifier = '0-identifier-1';
+    getDeviceDetails();
+  }
+
+  Future<String> getDeviceDetails() async {
+    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        identifier = build.androidId; //UUID for Android
+      }else{
+        identifier = '0-identifier-2';
+      }
+    } catch(E) {
+      identifier = '0-identifier-3';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +91,7 @@ class BodyLoginInclude extends StatelessWidget {
                     final responseLogin = _loginProvider.loginPost(
                         email: controladorEmail.text,
                         password: controladorPassword.text,
+                        id_dispositivo : identifier,
                         context: context);
 
                     responseLogin.then((value) {

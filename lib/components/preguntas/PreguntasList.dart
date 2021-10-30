@@ -36,7 +36,7 @@ class _PreguntasListState extends State<PreguntasList> {
           _scrollControllerMaterias.position.maxScrollExtent -
               _scrollControllerMaterias.offset <=
               50) {
-        if(esperarEnUso == false){
+        /*if(esperarEnUso == false){
           esperarEnUso = true;
           if(esperarEnUso == true){
             setState(() {
@@ -52,7 +52,7 @@ class _PreguntasListState extends State<PreguntasList> {
               esperarEnUso = false;
             });
           });
-        }
+        }*/
       }
     }
     return true;

@@ -155,7 +155,7 @@ class _SideBarState extends State<SideBar>
                         ),
                         MenuPage(
                           icon: Icons.exit_to_app,
-                          title: "Logout",
+                          title: "SALIR",
                           onTap: () {
                             sharedPreferences.remove('token');
                             Navigator.pushReplacement(context,

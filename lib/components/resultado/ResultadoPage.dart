@@ -17,7 +17,10 @@ class _ResultadoPageState extends State<ResultadoPage> {
   int correctos = 0;
   int incorrectos = 0;
   int totalPreguntas = 0;
-  int puntaje = 5;
+  int puntaje = 2;
+
+  int correctosResultado = 0;
+  int totalResultado = 0;
 
   @override
   void initState() {
@@ -27,8 +30,6 @@ class _ResultadoPageState extends State<ResultadoPage> {
 
   void configuracionInicial() async {
     sharedPreferences = await SharedPreferences.getInstance();
-
-    print('VER INCORRECTOS : ${sharedPreferences.getString('incorrectos')} ');
 
     correctos = int.parse(sharedPreferences.getString('correctos'));
     incorrectos = int.parse(sharedPreferences.getString('incorrectos'));
@@ -43,6 +44,9 @@ class _ResultadoPageState extends State<ResultadoPage> {
     if(totalPreguntas == null){
       totalPreguntas = 0;
     }
+
+    correctosResultado = correctos * puntaje;
+    totalResultado = totalPreguntas * puntaje;
 
     setState(() {
 
@@ -78,7 +82,7 @@ class _ResultadoPageState extends State<ResultadoPage> {
                 color: Color(0xFF455A64),
               )),
               SizedBox(height: 20.0,),
-              Text('Calificacion : ${totalPreguntas}/${totalPreguntas}', style: GoogleFonts.raleway(
+              Text('Calificacion : ${correctosResultado}/${totalResultado}', style: GoogleFonts.raleway(
                 fontWeight: FontWeight.w500,
                 fontSize: 26.0,
                 color: Color(0xFF455A64),

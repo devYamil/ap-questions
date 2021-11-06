@@ -3,6 +3,8 @@ import 'package:AP/src/models/Respuestas.dart';
 import 'package:AP/src/models/Respondidos.dart';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:AP/utils/env.dart';
+import 'package:AP/src/providers/calificarManager.dart';
 
 class RespuestasList extends StatefulWidget {
   final List<Respuestas> respuestas;
@@ -24,6 +26,8 @@ class RespuestasList extends StatefulWidget {
 
 class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollControllerMaterias = new ScrollController();
+  CalificarManager _calificarManager = new CalificarManager();
+  SharedPreferences sharedPreferences;
   List<Respuestas> respuestas;
   String token;
   int respuestaCorrecta;
@@ -33,11 +37,6 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
 
   Color colorRadio;
   int selectRadio = 0;
-
-  SharedPreferences sharedPreferences;
-
-  int correctos = 0;
-  int incorrectos = 0;
 
   @override
   bool get wantKeepAlive => true;
@@ -49,20 +48,9 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
     respuestaCorrecta = widget.respuestaCorrecta;
     respondidos = widget.respondidos;
     super.initState();
-
     selectedRespuesta = false;
 
-    correctos = 0;
-    incorrectos = 0;
-
     colorRadio = Colors.grey;
-
-    /*if(respondidos.respuesta == respuestaCorrecta){
-      colorRadio = Colors.green;
-    }else{
-      colorRadio = Colors.red;
-    }
-    selectRadio = respondidos.respuesta;*/
   }
 
   @override
@@ -71,27 +59,17 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
   }
 
   selectValueRadioButton(valueSelected, respuestaCorrecta){
-
-        print('VALOR SELECCIONADO : ${valueSelected}');
-        print('RESPUESTA CORRECTA : ${respuestaCorrecta}');
-
-
-
         if(selectedRespuesta == false){
           selectedRespuesta = true;
           if(valueSelected == respuestaCorrecta){
-            correctos = correctos + 1;
-            print('CORRECTOS : ${correctos}');
-            sharedPreferences.setString('correcto', '${correctos}');
+            _calificarManager.incrementarCorrectos();
             setState(() {
               colorRadio = Colors.green;
               selectRadio = valueSelected;
             });
             Toast.show('Correcto!!', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.green);
           }else{
-            incorrectos = incorrectos + 1;
-            print('INCORRECTOS : ${incorrectos}');
-            sharedPreferences.setString('incorrecto', '${incorrectos}');
+            _calificarManager.incrementarIncorrectos();
             setState(() {
               colorRadio = Colors.redAccent;
               selectRadio = valueSelected;
@@ -102,12 +80,6 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
         }else{
           Toast.show('Esta pregunta ya fue respondida', context, duration: 6, gravity: Toast.TOP, backgroundColor: Colors.redAccent);
         }
-        /*if(valueSelected == respuestaCorrecta){
-          colorRadio = Colors.green;
-        }else{
-          colorRadio = Colors.red;
-        }
-        selectRadio = valueSelected;*/
   }
 
   @override
@@ -122,7 +94,21 @@ class _RespuestasListState extends State<RespuestasList> with AutomaticKeepAlive
         return RadioListTile(
           value: respuestas[index].id,
           groupValue: selectRadio,
-          title: Text('${respuestas[index].nroRespuesta}.- ${respuestas[index].descripcionRespuesta}'),
+          title: respuestas[index].descripcionRespuesta == null ? Center(
+            child: Container(
+              color: Colors.white,
+              margin: EdgeInsets.all(0),
+              child: FadeInImage(
+                placeholder:
+                AssetImage('assets/images/loading_image.gif'),
+                image: NetworkImage(
+                    api_rest_uri + api_rest_get_image_respuestas + respuestas[index].imagenRespuestas,
+                    headers: {
+                      'Authorization': 'Bearer $token',
+                    }),
+              ),
+            ),
+          ) : Text('${respuestas[index].nroRespuesta}.- ${respuestas[index].descripcionRespuesta}'),
           onChanged: (valueSelected){
             selectValueRadioButton(valueSelected, respuestaCorrecta);
           },

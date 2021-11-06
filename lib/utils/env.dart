@@ -9,4 +9,5 @@ const String api_rest_get_image_product = 'image-product/';
 const String api_rest_get_materias = 'get-materias-paginate';
 const String api_rest_get_image_materias = 'image-materias/';
 const String api_rest_get_image_preguntas = 'image-preguntas/';
+const String api_rest_get_image_respuestas = 'image-respuestas/';
 const String api_rest_get_preguntas = 'get-preguntas-paginate/';

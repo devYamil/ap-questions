@@ -21,8 +21,7 @@ class _LoginProvider {
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
 
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
       final data = body['data'];
 

@@ -27,6 +27,9 @@ class _ResultadoPageState extends State<ResultadoPage> {
 
   void configuracionInicial() async {
     sharedPreferences = await SharedPreferences.getInstance();
+
+    print('VER INCORRECTOS : ${sharedPreferences.getString('incorrectos')} ');
+
     correctos = int.parse(sharedPreferences.getString('correctos'));
     incorrectos = int.parse(sharedPreferences.getString('incorrectos'));
     totalPreguntas = int.parse(sharedPreferences.getString('total_preguntas'));
@@ -40,6 +43,10 @@ class _ResultadoPageState extends State<ResultadoPage> {
     if(totalPreguntas == null){
       totalPreguntas = 0;
     }
+
+    setState(() {
+
+    });
   }
 
   @override

@@ -25,6 +25,8 @@ class _MateriasPageState extends State<MateriasPage> {
   void configuracionInicial() async {
     sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences.getString('token');
+    sharedPreferences.setString('correctos', '0');
+    sharedPreferences.setString('incorrectos', '0');
   }
 
   @override
